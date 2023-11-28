@@ -1,8 +1,16 @@
 import random
 
 def main():
-    playGame()
-    
+    play = True
+    while(play == True):
+        playGame()
+        handleInput = input("Would you like to play again? (y/n) ").lower()
+        while(handleInput != "y" and handleInput != "n"):
+            handleInput = input("Please enter y or n to answer... ").lower()
+
+        if (handleInput == "n"):
+            play = False
+        
 def playerGuess():
     return(input("Please enter your guess: "))
 
@@ -24,19 +32,18 @@ def give_feedback(secret_number, guess):
 def playGame():
     ATTEMPTS = 1;
     guessMe = generate_random_number()
-    print(guessMe)
     while(ATTEMPTS <= 3):
-        userGuess = input("Please enter a guess: ")
+        userGuess = playerGuess()
         userGuessNum = int(userGuess)
         while(not userGuess.isdigit() or not userGuessNum >= 1 or not userGuessNum <= 100):
-            userGuess = input("Please enter a new guess: ")
+            userGuess = playerGuess()
             userGuessNum = int(userGuess)
         if (give_feedback(guessMe, userGuessNum) == True):
-            print(f"Congrats! You won in {ATTEMPTS} tries!")
+            print(f"Congrats! You won in {ATTEMPTS} attempt(s)")
             break
         ATTEMPTS += 1
     if(ATTEMPTS > 3):
-        print(f"You've not yet guessed the correct number. Try again next time...")
+        print(f"You've not yet guessed the correct number. It was {guessMe}. Try again next time...")
 
 if __name__ == "__main__":
     main()
